@@ -1,0 +1,18 @@
+POST http://localhost:8000/api/users/login/
+Content-Type: application/json
+
+{
+    "username": "gojo",
+    "password": "gojo123"
+}
+
+
+###
+POST http://localhost:8000/api/users/logout/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczMTI3ODY5LCJpYXQiOjE3NzMxMjY2NjksImp0aSI6ImUwNjUwYTQ1NWM5ZjQwNzVhZGIzYzAxZGU4ODBjY2E0IiwidXNlcl9pZCI6IjMifQ.CnrvHK2LI3jObN4fkIW74OiOBvSTTgqmqZT8bGPgOHc
+
+Content-Type: application/json
+
+{
+    "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MzIxMzA2OSwiaWF0IjoxNzczMTI2NjY5LCJqdGkiOiJlNjIwNGRjMmFmNGM0N2MyOTU1N2I1M2UyZDU5ZDJiYiIsInVzZXJfaWQiOiIzIn0.eLC2Csm6HoFrWaCnTOHblYFmz4mGanMO4X58RpZnMEQ"
+}
