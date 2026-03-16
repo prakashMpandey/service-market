@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.services',
     'apps.booking',
     'apps.reviews',
+    'django_filters',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist'
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'backend', 'apps', 'booking', 'mail'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,15 +134,60 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
          'rest_framework.authentication.SessionAuthentication',
-    )
+    ),
+      'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+       'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '200/minute'
+    }
  
 }
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
 }
+
+CACHES = {
+    "default": {
+       "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
+## tell celery about redis - same url as caches settings
+CELERY_BROKER_URL="redis://127.0.0.1:6379/1"
+
+CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/1"
+
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST='smtp.gmail.com'
+
+EMAIL_PORT=587
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "prakashmanipandey685@gmail.com"
+
+EMAIL_HOST_PASSWORD='rnap apal zbjj ziim'
+
+DEFAULT_FROM_EMAIL = 'prakashmanipandey685@gmail.com'
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

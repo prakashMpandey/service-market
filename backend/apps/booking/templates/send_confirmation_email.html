@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmation</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
+        <div style="background-color: #2563eb; padding: 20px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Booking Confirmed!</h1>
+        </div>
+
+        <div style="padding: 30px;">
+            <p style="font-size: 16px;">Namaste,</p>
+            <p style="font-size: 16px;">Aapki service booking confirm ho gayi hai. Neeche diye gaye details check karein:</p>
+            
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 5px 0;"><strong>Booking ID:</strong> #{{ booking_id }}</p>
+                <p style="margin: 5px 0;"><strong>Service:</strong> {{ service_title }}</p>
+                <p style="margin: 5px 0;"><strong>Date:</strong> {{ booking_date }}</p>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="font-size: 14px; color: #666; margin-bottom: 10px;">Jab provider ghar pahunche, tab ye OTP share karein:</p>
+                <div style="background-color: #eff6ff; border: 2px dashed #2563eb; padding: 15px; display: inline-block; border-radius: 5px;">
+                    <span style="font-size: 32px; font-weight: bold; color: #2563eb; letter-spacing: 5px;">{{ arrival_otp }}</span>
+                </div>
+            </div>
+
+            <p style="font-size: 14px; color: #ef4444;"><strong>Note:</strong> Suraksha ke liye, ye OTP kisi ko bhi phone par na batayein.</p>
+        </div>
+
+        <div style="background-color: #f3f4f6; padding: 20px; text-align: center; font-size: 12px; color: #9ca3af;">
+            <p style="margin: 0;">&copy; 2026 Your Service Marketplace, Raipur.</p>
+            <p style="margin: 5px 0;">If you didn't request this, please ignore this email.</p>
+        </div>
+    </div>
+</body>
+</html>

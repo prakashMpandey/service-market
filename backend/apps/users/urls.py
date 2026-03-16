@@ -11,6 +11,8 @@ urlpatterns = [
     path('signup/',views.CreateUserView.as_view()),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('logout/',views.LogoutView.as_view(),name='logout')
-    
+    path('logout/',views.LogoutView.as_view(),name='logout'),
+    path('location/',views.UpdateLocationView.as_view(),name='updateView'),
+    path('profile_picture/',views.AddProfilePicture,name='upload_profile_picture'),
+    path('dashboard/',views.DashboardView.as_view())
 ]

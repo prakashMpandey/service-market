@@ -7,4 +7,3 @@ class ReviewSerializer(serializers.ModelSerializer):
         model=Review
         fields=['comment','rating','user','service']
         extra_kwargs={'user':{"read_only":True}}
-

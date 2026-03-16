@@ -6,6 +6,33 @@ Content-Type: application/json
     "password": "gojo123"
 }
 
+###
+GET http://localhost:8000/api/users/dashboard/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzY0Mzk0LCJpYXQiOjE3NzM2Nzc5OTQsImp0aSI6ImNjZmFhOWJiNDAzZjQwOWFhODQ4NzZiYjU3ZjdmYmJhIiwidXNlcl9pZCI6IjMifQ.vHe4Lxnp7JiK8OYUEF7Jb3QCGxemYklvVAa1kcy3eGM
+
+###
+POST http://localhost:8000/api/users/signup/
+Content-Type: application/json
+
+{
+    "username": "ashrita",
+    "email": "ashritapandey685@gmail.com",
+    "password": "ashrita123",
+    "role":"customer"
+}
+
+###
+
+
+PATCH http://localhost:8000/api/users/location/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNDY1ODczLCJpYXQiOjE3NzMzNzk0NzMsImp0aSI6ImFiY2U0MDQxZWY1MjQ5OGVhNWE0NzAyMGM1MWFhOTdhIiwidXNlcl9pZCI6IjMifQ.cskTCZFk3Bwpialz6xgYs0oYlK8-dfnxapNTXHV33OU
+Content-Type: application/json
+
+{
+ "latitude": 21.2514,
+ "longitude": 81.6296,
+ "radius": 10
+}
 
 ###
 POST http://localhost:8000/api/users/logout/
@@ -16,3 +43,137 @@ Content-Type: application/json
 {
     "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MzIxMzA2OSwiaWF0IjoxNzczMTI2NjY5LCJqdGkiOiJlNjIwNGRjMmFmNGM0N2MyOTU1N2I1M2UyZDU5ZDJiYiIsInVzZXJfaWQiOiIzIn0.eLC2Csm6HoFrWaCnTOHblYFmz4mGanMO4X58RpZnMEQ"
 }
+
+
+###
+Post http://localhost:8000/api/services/create/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNDY1ODczLCJpYXQiOjE3NzMzNzk0NzMsImp0aSI6ImFiY2U0MDQxZWY1MjQ5OGVhNWE0NzAyMGM1MWFhOTdhIiwidXNlcl9pZCI6IjMifQ.cskTCZFk3Bwpialz6xgYs0oYlK8-dfnxapNTXHV33OU
+Content-Type: application/json
+
+{
+    "title": "gojo hajaaam",
+    "description": "This is the first service.",
+    "price": 1500.0,
+    "category": 2,
+    "location":"raipur"
+}
+###
+
+GET http://localhost:8000/api/services/
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzIzMDkxLCJpYXQiOjE3NzM2MzY2OTEsImp0aSI6IjNkNzhiMmE0NzNjMjRkODE4N2I5MTE5NDc1MDc1MDg1IiwidXNlcl9pZCI6IjUifQ.gnma7MRXnlVvXwHbe4cZn-9TsIpyEmgo5rb46wwsYmY
+
+###
+PUT http://localhost:8000/api/services/update/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczMjA2NzM0LCJpYXQiOjE3NzMyMDU1MzQsImp0aSI6IjI3MTMyMzVkYzk4ZjRkZmRhZmVhOTliZDljN2EzMTQxIiwidXNlcl9pZCI6IjYifQ.WOyETMfp6LzvpgHw-vqmsl66VUT5xsp2kEdy_PwShp0
+Content-Type: application/json
+
+{
+    "title": "Updated Service 1",
+    "description": "This is the updated first service.",
+    "price": 150.0,
+    "category": 1,
+    "location":"raipur"
+}
+
+
+###
+DELETE http://localhost:8000/api/services/delete/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczMjA2OTE4LCJpYXQiOjE3NzMyMDU3MTgsImp0aSI6IjRjY2FkZmZlMWRjMTRlYjI5MTRhOWUzZGU3OGM4MDE5IiwidXNlcl9pZCI6IjMifQ.hP8WonljGGdWCTA1S6Hf1k3nYEdiXS7zGLCq6FCZjUk
+
+
+
+###fetch all services
+GET http://localhost:8000/api/services/myservices/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczMjA4NDMxLCJpYXQiOjE3NzMyMDcyMzEsImp0aSI6ImY1YWY0M2JjOGI1NTRhZjQ4NzUyYTVjYWFjNjgxNzVjIiwidXNlcl9pZCI6IjYifQ.IFhnRn_looAPGb3oQ8oj1z8nOj3_inmomzwEVggNjy8
+
+
+###  get nearby services
+GET http://localhost:8000/api/services/nearby/?lat=21.233490&lng=81.630460&search=&ordering=-price
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNTg0ODk2LCJpYXQiOjE3NzM0OTg0OTYsImp0aSI6IjU5ZmE2ZmRlZWVjZjQ0ZTg4NWI2MWMzNjFjNWY2MzNjIiwidXNlcl9pZCI6IjMifQ.zcXtzMMXKUqh47iMIXXbgPl8OHSiSXjEajtrnpf5QAM
+
+# ###
+# GET http://localhost:8000/api/bookings/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNjYyMDk3LCJpYXQiOjE3NzM1NzU2OTcsImp0aSI6IjEyZmFhYzU4NmQwMzRkOWE5NzIzYzlmY2E0NmVjZGE2IiwidXNlcl9pZCI6IjUifQ.JzPuy_y9VmlOCmF93AmnLxEsEzx_pU6L9ap13kUeDlA
+
+ 
+###  create booking or get bookings
+POST http://localhost:8000/api/bookings/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzIzMDkxLCJpYXQiOjE3NzM2MzY2OTEsImp0aSI6IjNkNzhiMmE0NzNjMjRkODE4N2I5MTE5NDc1MDc1MDg1IiwidXNlcl9pZCI6IjUifQ.gnma7MRXnlVvXwHbe4cZn-9TsIpyEmgo5rb46wwsYmY
+Content-Type: application/json
+
+{
+    "service":6,
+    "booking_date":"2026-03-16T10:00:00Z",
+    "address":"123 Main St, Raipur"
+}
+
+
+### confirm booking 
+POST http://localhost:8000/api/bookings/confirm/21/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzI0MzI3LCJpYXQiOjE3NzM2Mzc5MjcsImp0aSI6ImY3ZTNlZTQzN2I3MDRkMzY5ODhkYmQxNTg5ZmUzZGM3IiwidXNlcl9pZCI6IjMifQ.qlu9tNsPieKHi6c05EnRFwXM5GvsfCUpT5ZPwKAf92A
+
+###  start work
+POST http://localhost:8000/api/bookings/start/20/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzMzMTQyLCJpYXQiOjE3NzM2NDY3NDIsImp0aSI6IjcyMmVjNjM4YjlmODRiMTViY2M5MTExYjhmNjc4ZDM5IiwidXNlcl9pZCI6IjMifQ.82t62Fe7XfIFK6hK7132qDgxSQ6Hwhpv-gnXHVBQNWk
+Content-Type: application/json
+
+{
+    "arrival_otp":"0880"
+}
+###
+POST http://localhost:8000/api/bookings/complete/20/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzMzMTQyLCJpYXQiOjE3NzM2NDY3NDIsImp0aSI6IjcyMmVjNjM4YjlmODRiMTViY2M5MTExYjhmNjc4ZDM5IiwidXNlcl9pZCI6IjMifQ.82t62Fe7XfIFK6hK7132qDgxSQ6Hwhpv-gnXHVBQNWk
+Content-Type: application/json
+
+{
+    "completion_otp":"2832"
+}
+
+### initiate payment
+
+
+
+POST http://localhost:8000/api/bookings/payment/20/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzI0MzI3LCJpYXQiOjE3NzM2Mzc5MjcsImp0aSI6ImY3ZTNlZTQzN2I3MDRkMzY5ODhkYmQxNTg5ZmUzZGM3IiwidXNlcl9pZCI6IjMifQ.qlu9tNsPieKHi6c05EnRFwXM5GvsfCUpT5ZPwKAf92A
+Content-Type: application/json
+
+{
+    "payment_method":"online"
+}
+
+### verify payment
+
+POST http://localhost:8000/api/bookings/20/verify/
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNjY2ODc2LCJpYXQiOjE3NzM1ODA0NzYsImp0aSI6ImIyYmQwZWU5N2E3NjRiYmRhNzcxYmE3NDg1MzA1NTZhIiwidXNlcl9pZCI6IjUifQ.w6lftvG4xfTR3bjGyXHOroxuOTBE4lkx-7T7puKSak8
+Content-Type: application/json
+
+{
+  "razorpay_payment_id": "pay_SRp8sUVzzfnAbV",
+  "razorpay_order_id": "order_SRp8DowTL8KRNn",
+  "razorpay_signature": "83dd5e554863e166c5abba48e69d558c5df1b58b3cb775057088ec8d1732c7a9"
+}
+
+###  get booking details
+GET http://localhost:8000/api/bookings/20/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNjY2ODc2LCJpYXQiOjE3NzM1ODA0NzYsImp0aSI6ImIyYmQwZWU5N2E3NjRiYmRhNzcxYmE3NDg1MzA1NTZhIiwidXNlcl9pZCI6IjUifQ.w6lftvG4xfTR3bjGyXHOroxuOTBE4lkx-7T7puKSak8
+
+
+
+###
+POST http://localhost:8000/api/reviews/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczMzE4OTczLCJpYXQiOjE3NzMzMTY1NzMsImp0aSI6IjYyYjE1OTgzN2EwNDRhOTk4ZjIxOWJiNWZlMTg1MWIxIiwidXNlcl9pZCI6IjUifQ.D9yBGO3iu1bNeFN2QubDFde_n35SrTwONk0Ju_XvfCc
+Content-Type: application/json
+
+{
+    "service": 2,
+    "rating": 4,
+    "comment": "Great service!"
+}
+
+###
+DELETE http://localhost:8000/api/reviews/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczMzE4OTczLCJpYXQiOjE3NzMzMTY1NzMsImp0aSI6IjYyYjE1OTgzN2EwNDRhOTk4ZjIxOWJiNWZlMTg1MWIxIiwidXNlcl9pZCI6IjUifQ.D9yBGO3iu1bNeFN2QubDFde_n35SrTwONk0Ju_XvfCc
+
+
+
+###

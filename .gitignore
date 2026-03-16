@@ -52,3 +52,5 @@ var/
 .installed.cfg
 *.egg
 #
+
+db.sqlite3
