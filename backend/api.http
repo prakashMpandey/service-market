@@ -15,8 +15,8 @@ POST http://localhost:8000/api/users/signup/
 Content-Type: application/json
 
 {
-    "username": "ashrita",
-    "email": "ashritapandey685@gmail.com",
+    "username": "manisha",
+    "email": "manisha685@gmail.com",
     "password": "ashrita123",
     "role":"customer"
 }
@@ -47,20 +47,20 @@ Content-Type: application/json
 
 ###
 Post http://localhost:8000/api/services/create/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNDY1ODczLCJpYXQiOjE3NzMzNzk0NzMsImp0aSI6ImFiY2U0MDQxZWY1MjQ5OGVhNWE0NzAyMGM1MWFhOTdhIiwidXNlcl9pZCI6IjMifQ.cskTCZFk3Bwpialz6xgYs0oYlK8-dfnxapNTXHV33OU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczODQ2OTQxLCJpYXQiOjE3NzM3NjA1NDEsImp0aSI6IjA4MDA5MjIyMWJmZjQ2OGY5MGMyMjc0YWU3NmJjNTA3IiwidXNlcl9pZCI6IjMiLCJ1c2VybmFtZSI6Imdvam8iLCJyb2xlIjoicHJvdmlkZXIifQ.W21Js0OYc35Uv6qmDywQmW6WLBB3VZ0uowCnojZ1xD0
 Content-Type: application/json
 
 {
-    "title": "gojo hajaaam",
-    "description": "This is the first service.",
-    "price": 1500.0,
-    "category": 2,
-    "location":"raipur"
+    "title": "gojoaaam",
+    "description":"ths is a sample service description",
+    "price": 1500.00,
+    "category": 2
 }
+
 ###
 
-GET http://localhost:8000/api/services/
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzIzMDkxLCJpYXQiOjE3NzM2MzY2OTEsImp0aSI6IjNkNzhiMmE0NzNjMjRkODE4N2I5MTE5NDc1MDc1MDg1IiwidXNlcl9pZCI6IjUifQ.gnma7MRXnlVvXwHbe4cZn-9TsIpyEmgo5rb46wwsYmY
+GET http://localhost:8000/api/services/1
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczODI4OTI1LCJpYXQiOjE3NzM3NDI1MjUsImp0aSI6Ijc4ZTJiMjYyNmU3NzQwMTlhN2YzYWYyZGRlOTE1NzZhIiwidXNlcl9pZCI6IjUiLCJ1c2VybmFtZSI6InJ1aGkiLCJyb2xlIjoiY3VzdG9tZXIifQ.LsCi6yPRiyM0jDkM0r9ruNb3GLmVrtqbhXBSxEN6xPA
 
 ###
 PUT http://localhost:8000/api/services/update/3/
@@ -88,8 +88,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 
 ###  get nearby services
-GET http://localhost:8000/api/services/nearby/?lat=21.233490&lng=81.630460&search=&ordering=-price
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNTg0ODk2LCJpYXQiOjE3NzM0OTg0OTYsImp0aSI6IjU5ZmE2ZmRlZWVjZjQ0ZTg4NWI2MWMzNjFjNWY2MzNjIiwidXNlcl9pZCI6IjMifQ.zcXtzMMXKUqh47iMIXXbgPl8OHSiSXjEajtrnpf5QAM
+GET http://localhost:8000/api/services/nearby/?lat=21.2674878&lng=81.5845407&search=plumber&ordering=-price
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczODI4OTI1LCJpYXQiOjE3NzM3NDI1MjUsImp0aSI6Ijc4ZTJiMjYyNmU3NzQwMTlhN2YzYWYyZGRlOTE1NzZhIiwidXNlcl9pZCI6IjUiLCJ1c2VybmFtZSI6InJ1aGkiLCJyb2xlIjoiY3VzdG9tZXIifQ.LsCi6yPRiyM0jDkM0r9ruNb3GLmVrtqbhXBSxEN6xPA
 
 # ###
 # GET http://localhost:8000/api/bookings/
@@ -133,8 +133,8 @@ Content-Type: application/json
 
 
 
-POST http://localhost:8000/api/bookings/payment/20/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzI0MzI3LCJpYXQiOjE3NzM2Mzc5MjcsImp0aSI6ImY3ZTNlZTQzN2I3MDRkMzY5ODhkYmQxNTg5ZmUzZGM3IiwidXNlcl9pZCI6IjMifQ.qlu9tNsPieKHi6c05EnRFwXM5GvsfCUpT5ZPwKAf92A
+POST http://localhost:8000/api/bookings/payment/24/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczODA4NjEwLCJpYXQiOjE3NzM3MjIyMTAsImp0aSI6ImZkYWE2MmIxZGUwOTQ3YmFhNzBiNTMxYjZiMmI0OTI0IiwidXNlcl9pZCI6IjMiLCJ1c2VybmFtZSI6Imdvam8iLCJyb2xlIjoicHJvdmlkZXIifQ.bAkhdc4DJAGeyvzaXv-gwKpDy7i-h9sS8RQ_BunbU3Y
 Content-Type: application/json
 
 {

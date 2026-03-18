@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import ServiceCategory,Service
 from rest_framework.generics import ListAPIView,CreateAPIView,UpdateAPIView,DestroyAPIView,RetrieveAPIView
-from .serializers import ServiceSerializer,NearbyServiceSerializer,ServiceSerializerWithReviews
+from .serializers import ServiceSerializer,NearbyServiceSerializer,ServiceSerializerWithReviews,CategorySerializer,CreateServiceSerializer
 from rest_framework.permissions import IsAuthenticated
 from apps.users.permissions import isProvider,isProviderAndOwner
 from rest_framework.views import APIView
@@ -20,7 +20,7 @@ class ServicesListView(ListAPIView):
     serializer_class=ServiceSerializer
     permission_classes=[IsAuthenticated]
 
-    @method_decorator(cache_page(60*15,key_prefix='public_list'))
+    @method_decorator(cache_page(60*10,key_prefix='public_list'))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -56,7 +56,7 @@ class NearbyServiceList(ListAPIView):
 
 class ServicesCreateView(CreateAPIView):
     model=Service
-    serializer_class=ServiceSerializer
+    serializer_class=CreateServiceSerializer
     permission_classes=[IsAuthenticated,isProvider]
 
     def perform_create(self, serializer):
@@ -84,3 +84,8 @@ class RetrieveServiceView(RetrieveAPIView):
     queryset=Service.objects.prefetch_related('reviews__user')
     serializer_class=ServiceSerializerWithReviews
     
+class CategoryListView(ListAPIView):
+    permission_classes=[IsAuthenticated,isProvider]
+    queryset=ServiceCategory.objects.all()
+    serializer_class=CategorySerializer
+    pagination_class=None

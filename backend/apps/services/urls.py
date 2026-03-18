@@ -8,6 +8,7 @@ urlpatterns = [
    path('delete/<int:pk>/',ServiceDeleteView.as_view(),name='deleteService'),
    path('myservices/',MyServiceListView.as_view(),name='myservices'),
    path('nearby/',NearbyServiceList.as_view(),name='nearbyservices'),
-   path('<int:pk>/',RetrieveServiceView.as_view(),name='getService')
+   path('<int:pk>/',RetrieveServiceView.as_view(),name='getService'),
+   path('categories/',CategoryListView.as_view())
 
 ]

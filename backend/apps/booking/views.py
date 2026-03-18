@@ -26,7 +26,8 @@ class BookingListView(generics.ListCreateAPIView):
     permission_classes=[IsAuthenticated]
 
     def perform_create(self, serializer):
-        return serializer.save(customer=self.request.user)
+        service=serializer.validated_data.get('service')
+        return serializer.save(customer=self.request.user,amount=service.price)
     
     def get_queryset(self):
      user=self.request.user
@@ -61,7 +62,7 @@ class BookingRetreiveView(generics.RetrieveAPIView):
             return Booking.objects.select_related('service', 'service__provider').filter(customer=user)
         
         if user.role == 'provider':
-            return Booking.objects.select_related('service','booking__customer', 'service__provider').filter(service__provider=user)
+            return Booking.objects.select_related('service','customer', 'service__provider').filter(service__provider=user)
         
         return Booking.objects.none()  
            
@@ -188,10 +189,18 @@ class InitiatePaymentView(APIView):
         if payment_method=='cash':
             with transaction.atomic():
                 booking.payment_method = 'cash'
-                booking.is_paid = True 
+                booking.is_paid = True
                 booking.save()
             return Response({"message": "Payment recorded as Cash"}, status=status.HTTP_200_OK)
-        
+
+        # Guard: ensure Razorpay keys are configured before making any API call
+        razorpay_key = os.getenv("RAZORPAY_KEY_ID")
+        razorpay_secret = os.getenv("RAZORPAY_KEY_SECRET")
+        if not razorpay_key or not razorpay_secret:
+            return Response(
+                {"error": "Payment gateway not configured. Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to your .env file."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
 
         try:
                 
@@ -201,11 +210,12 @@ class InitiatePaymentView(APIView):
                 return Response({
                     "order_id": existing_payment.razorpay_order_id,
                     "amount": existing_payment.amount,
-                    "currency": 'INR'
+                    "currency": 'INR',
+                    "key_id": razorpay_key,
                 }, status=200)
 
             service_price=booking.service.price
-            razorpay_client=razorpay.Client(auth=(os.getenv("RAZORPAY_KEY_ID"),os.getenv("RAZORPAY_KEY_SECRET")))
+            razorpay_client=razorpay.Client(auth=(razorpay_key, razorpay_secret))
 
             razorpay_order=razorpay_client.order.create(
                     {
@@ -226,14 +236,14 @@ class InitiatePaymentView(APIView):
                         "order_id": razorpay_order.get("id"),
                         "amount": service_price,
                         "currency": 'INR',
-                        "key_id": os.getenv("RAZORPAY_KEY_ID")
-
+                        "key_id": razorpay_key,
                     },
                     status=status.HTTP_201_CREATED,
                 )
 
 
         except Exception as e:
+                print(e)
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
           
 class VerifyPaymentView(APIView):

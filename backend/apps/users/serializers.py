@@ -1,5 +1,15 @@
 from rest_framework import serializers
 from .models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['username'] = user.username
+        token['role'] = user.role
+        return token
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +54,8 @@ class ProfilePhotoSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("only JPG and PNG  images are allowed")
 
         return value
+
+# class UserDetailsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=User
+#         fields=['username','role']
