@@ -190,9 +190,9 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "prakashmanipandey685@gmail.com"
 
-EMAIL_HOST_PASSWORD='rnap apal zbjj ziim'
+EMAIL_HOST_PASSWORD="EMAIL HOST PASSWORD"
 
-DEFAULT_FROM_EMAIL = 'prakashmanipandey685@gmail.com'
+DEFAULT_FROM_EMAIL = 'DEFAULT FROM EMAIL'
 
 
 MEDIA_URL = '/media/'
