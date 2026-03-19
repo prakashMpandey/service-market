@@ -16,7 +16,7 @@ from django.views.decorators.cache import cache_page
 # Create your views here.
 
 class ServicesListView(ListAPIView):
-    queryset=Service.objects.prefetch_related('category')
+    queryset=Service.objects.prefetch_related('category')[:6]
     serializer_class=ServiceSerializer
     permission_classes=[IsAuthenticated]
 

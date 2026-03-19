@@ -6,11 +6,11 @@ from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
 class BookingSerializer(serializers.ModelSerializer):
-    service_title=serializers.CharField(source='service.title')
+    service_title=serializers.CharField(source='service.title',read_only=True)
     class Meta:
         model=Booking
         fields=['id','service','service_title','address','booking_date','status','amount','is_paid','payment_method']
-        read_only_fields=('id','amount','is_paid','service_title')
+        extra_kwargs={'id':{"read_only":True},'amount':{"read_only":True},'is_paid':{"read_only":True},'service_title':{"read_only":True}}
         
 
     def validate_booking_date(self,value):

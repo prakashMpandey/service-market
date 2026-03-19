@@ -104,7 +104,7 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Featured Services</h2>
             <p className="text-gray-500 dark:text-gray-400 mt-1">Top-rated services in your area</p>
           </div>
-          <Link
+          {/* <Link
             to="/services/nearby"
             className="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
           >
@@ -112,7 +112,7 @@ export default function HomePage() {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </Link>
+          </Link> */}
         </div>
 
         {loading ? (

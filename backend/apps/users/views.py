@@ -59,7 +59,7 @@ class CreateUserView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        send_welcome_email.delay_on_commit(user.id)
+        # send_welcome_email.delay_on_commit(user.id)
 
 
 class LogoutView(APIView):
