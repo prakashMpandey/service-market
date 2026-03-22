@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
   const { user, logout, isProvider } = useAuth();
@@ -58,6 +59,9 @@ export default function Navbar() {
                   </NavLink>
                 </div>
               )}
+
+              {/* Notifications */}
+              <NotificationBell />
 
               {/* User Menu */}
               <div className="flex items-center gap-2 sm:gap-3 ml-2 sm:ml-4 pl-2 sm:pl-4 border-l border-gray-200 dark:border-gray-700">

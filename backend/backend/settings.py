@@ -22,6 +22,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.getenv('SETTINGS_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,11 +47,14 @@ INSTALLED_APPS = [
     'apps.services',
     'apps.booking',
     'apps.reviews',
+    'apps.notifications',
     'django_filters',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'silk',
+    'channels'
      
 ]
 
@@ -62,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -83,15 +89,27 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER':os.getenv('DATABASE_USERNAME'),
+        "PASSWORD":os.getenv('DATABASE_PASSWORD'),
+        "HOST":os.getenv('DATABASE_HOST'),
+        "PORT":os.getenv('DATABASE_PORT')
     }
 }
 
@@ -180,6 +198,9 @@ CELERY_BROKER_URL="redis://127.0.0.1:6379/1"
 
 CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/1"
 
+
+### email settings
+
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST='smtp.gmail.com'
@@ -188,11 +209,12 @@ EMAIL_PORT=587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "prakashmanipandey685@gmail.com"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 
-EMAIL_HOST_PASSWORD='rnap apal zbjj ziim'
+EMAIL_HOST_PASSWORD=os.getenv('EMAIL_HOST_PASSWORD')
 
-DEFAULT_FROM_EMAIL = 'prakashmanipandey685@gmail.com'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
 
 
 MEDIA_URL = '/media/'
@@ -209,3 +231,13 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)], 
+        },
+    },
+}

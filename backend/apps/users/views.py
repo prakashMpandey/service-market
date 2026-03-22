@@ -67,7 +67,6 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
-            # Accept either 'refresh' or 'refresh_token' key
             refresh_token = request.data.get('refresh') or request.data.get('refresh_token')
             if not refresh_token:
                 return Response({"message": "Refresh token required"}, status=status.HTTP_400_BAD_REQUEST)

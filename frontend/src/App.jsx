@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import { ProtectedRoute, ProviderRoute, CustomerRoute } from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 
@@ -24,6 +25,7 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
+          <NotificationProvider>
           <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 transition-colors">
             <Navbar />
             <main className="max-w-6xl mx-auto px-4 py-8">
@@ -72,6 +74,7 @@ export default function App() {
               </Routes>
             </main>
           </div>
+          </NotificationProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

@@ -18,7 +18,7 @@ class Booking(models.Model):
     customer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='bookings')
     service=models.ForeignKey(Service, on_delete=models.CASCADE,related_name='bookings')
     booking_date=models.DateTimeField()
-    status=models.CharField(choices=BookingStatusChoices.choices,default=BookingStatusChoices.PENDING)
+    status=models.CharField(max_length=10,choices=BookingStatusChoices.choices,default=BookingStatusChoices.PENDING)
     address=models.CharField(max_length=100)
     arrival_otp=models.CharField(max_length=4,null=True)
     completion_otp=models.CharField(max_length=4,null=True,blank=True)

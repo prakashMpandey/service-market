@@ -32,9 +32,9 @@ class BookingListView(generics.ListCreateAPIView):
     def get_queryset(self):
      user=self.request.user
      if user.role == 'customer':
-            return Booking.objects.filter(customer=user)
+            return Booking.objects.filter(customer=user).select_related('service')
      
-     return Booking.objects.filter(service__provider=user)
+     return Booking.objects.filter(service__provider=user).select_related('service')
     
     def create(self, request, *args, **kwargs):
         if request.user.role == 'provider':
@@ -62,7 +62,7 @@ class BookingRetreiveView(generics.RetrieveAPIView):
             return Booking.objects.select_related('service', 'service__provider').filter(customer=user)
         
         if user.role == 'provider':
-            return Booking.objects.select_related('service','customer', 'service__provider').filter(service__provider=user)
+            return Booking.objects.select_related('service','customer').filter(service__provider=user)
         
         return Booking.objects.none()  
            
@@ -83,7 +83,7 @@ class BookingConfirmView(APIView):
         with transaction.atomic():
             booking.status='confirmed'
             booking.arrival_otp=otp
-            booking.save()
+            booking.save(update_fields=['status','arrival_otp'])
             send_booking_confirm.delay_on_commit(booking.id)
         
 

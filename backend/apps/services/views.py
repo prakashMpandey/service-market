@@ -33,9 +33,13 @@ class NearbyServiceList(ListAPIView):
     search_fields=['title','category__name','description']
     ordering_fields=['price']
 
+    latitude=None
+    longitude=None
     def get_queryset(self):
          lat = float(self.request.query_params.get('lat'))
          lng = float(self.request.query_params.get('lng'))
+         self.latitude=round(lat,2)
+         self.longitude=round(lng,2)
          radius = float(self.request.query_params.get("radius", 10))
 
          min_lat, max_lat, min_lng, max_lng = boundingBox(lat, lng, radius)
@@ -44,9 +48,12 @@ class NearbyServiceList(ListAPIView):
              provider__role='provider',
              provider__latitude__range=(min_lat,max_lat),
              provider__longitude__range=(min_lng,max_lng)
-         ).prefetch_related('category')
+         ).select_related('provider','category')
 
          return services
+    
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
     
     def get_serializer_context(self):
         context=super().get_serializer_context()

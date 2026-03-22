@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import client from '../api/client';
 import ServiceCard from '../components/ServiceCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -8,8 +8,27 @@ export default function NearbyServicesPage() {
   const [loading, setLoading] = useState(false);
   const [locError, setLocError] = useState('');
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [radius, setRadius] = useState(10);
   const [coords, setCoords] = useState(null);
+  const debounceTimeoutRef = useRef(null);
+  const abortControllerRef = useRef(null);
+
+  // Debounce search input
+  useEffect(() => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+    debounceTimeoutRef.current = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 400);
+
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [search]);
 
   function getLocation() {
     setLocError('');
@@ -23,22 +42,42 @@ export default function NearbyServicesPage() {
     );
   }
 
-  const nearbyServices = async () => {
+  const nearbyServices = useCallback(async () => {
     if (!coords) return;
+
+    // Cancel any pending request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
     setLoading(true);
     const params = { lat: coords.lat, lng: coords.lng, radius };
-    if (search) params.search = search;
+    if (debouncedSearch) params.search = debouncedSearch;
 
-    await client
-      .get('/services/nearby/', { params })
-      .then(({ data }) => setServices(data.results ?? data))
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  };
+    try {
+      const { data } = await client.get('/services/nearby/', {
+        params,
+        signal: abortControllerRef.current.signal,
+      });
+      setServices(data.results ?? data);
+    } catch (err) {
+      if (err.name !== 'CanceledError' && err.code !== 'ERR_CANCELED') {
+        // Only handle non-cancellation errors
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [coords, radius, debouncedSearch]);
 
   useEffect(() => {
     nearbyServices();
-  }, [coords, radius, search]);
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [nearbyServices]);
 
   return (
     <div className="space-y-6">

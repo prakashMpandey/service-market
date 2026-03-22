@@ -25,7 +25,8 @@ urlpatterns = [
     path('api/users/',include('apps.users.urls')),
     path('api/services/',include('apps.services.urls')),
     path('api/bookings/',include('apps.booking.urls')),
-    path('api/reviews/',include('apps.reviews.urls'))
+    path('api/reviews/',include('apps.reviews.urls')),
+    path('api/notifications/',include('apps.notifications.urls')),
 ]
-
+urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
