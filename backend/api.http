@@ -7,6 +7,17 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8000/api/users/signup/
+Content-Type: application/json
+
+{
+    "username": "gojo",
+    "email": "gojo@gmail.com",
+    "password": "gojo123"
+}
+
+
+###
 GET http://localhost:8000/api/users/dashboard/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzczNzY0Mzk0LCJpYXQiOjE3NzM2Nzc5OTQsImp0aSI6ImNjZmFhOWJiNDAzZjQwOWFhODQ4NzZiYjU3ZjdmYmJhIiwidXNlcl9pZCI6IjMifQ.vHe4Lxnp7JiK8OYUEF7Jb3QCGxemYklvVAa1kcy3eGM
 

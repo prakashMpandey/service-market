@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'silk',
-    'channels'
+    'channels',
      
 ]
 
@@ -95,23 +95,32 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+import dj_database_url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER':os.getenv('DATABASE_USERNAME'),
-        "PASSWORD":os.getenv('DATABASE_PASSWORD'),
-        "HOST":os.getenv('DATABASE_HOST'),
-        "PORT":os.getenv('DATABASE_PORT')
-    }
+    'default':dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
 }
+
+# DATABASES = {
+#     'default':{
+#         "ENGINE":"django.db.backends.sqlite3",
+#         'NAME': BASE_DIR / 'db.sqlite3',
+
+#     }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DATABASE_NAME'),
+#         'USER':os.getenv('DATABASE_USERNAME'),
+#         "PASSWORD":os.getenv('DATABASE_PASSWORD'),
+#         "HOST":os.getenv('DATABASE_HOST'),
+#         "PORT":os.getenv('DATABASE_PORT')
+#     }
+# }
 
 
 # Password validation
@@ -185,7 +194,7 @@ SIMPLE_JWT = {
 CACHES = {
     "default": {
        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://redis:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -194,9 +203,9 @@ CACHES = {
 
 
 ## tell celery about redis - same url as caches settings
-CELERY_BROKER_URL="redis://127.0.0.1:6379/1"
+CELERY_BROKER_URL="redis://redis:6379/1"
 
-CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/1"
+CELERY_RESULT_BACKEND="redis://redis:6379/1"
 
 
 ### email settings
@@ -236,7 +245,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)], 
+            "hosts": [("redis", 6379)], 
         },
     },
 }

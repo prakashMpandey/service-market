@@ -4,8 +4,6 @@ import client from '../api/client';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useAuth } from '../contexts/AuthContext';
 
-const MEDIA_URL = 'http://localhost:8000';
-
 function StarRating({ rating }) {
   return (
     <span>

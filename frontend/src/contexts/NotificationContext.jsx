@@ -4,6 +4,8 @@ import client from '../api/client';
 
 const NotificationContext = createContext(null);
 
+const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL;
+
 export function NotificationProvider({ children }) {
   const { user } = useAuth();
   const [notifications, setNotifications] = useState([]);
@@ -11,8 +13,6 @@ export function NotificationProvider({ children }) {
   const [isConnected, setIsConnected] = useState(false);
   const wsRef = useRef(null);
   const reconnectTimeoutRef = useRef(null);
-
-
 
   // Fetch initial notifications
   const fetchNotifications = useCallback(async () => {
@@ -31,9 +31,6 @@ export function NotificationProvider({ children }) {
     }
   }, [user]);
 
-
-
-
   // Connect to WebSocket
   const connectWebSocket = useCallback(() => {
     if (!user) return;
@@ -46,7 +43,13 @@ export function NotificationProvider({ children }) {
       wsRef.current.close();
     }
 
-    const wsUrl = `ws://localhost:8000/ws/notifications/?token=${token}`;
+    // Clear any pending reconnect
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
+    }
+
+    const wsUrl = `${WS_BASE_URL}/ws/notifications/?token=${token}`;
     const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
@@ -75,8 +78,9 @@ export function NotificationProvider({ children }) {
       console.log('WebSocket disconnected');
       setIsConnected(false);
 
-      // Attempt to reconnect after 3 seconds
-      if (user) {
+      // Only reconnect if user still exists AND we still have a valid token
+      const currentToken = localStorage.getItem('access');
+      if (user && currentToken) {
         reconnectTimeoutRef.current = setTimeout(() => {
           connectWebSocket();
         }, 3000);
@@ -90,8 +94,6 @@ export function NotificationProvider({ children }) {
     wsRef.current = ws;
   }, [user]);
 
-
-
   // Initialize on user login
   useEffect(() => {
     if (user) {
@@ -99,6 +101,10 @@ export function NotificationProvider({ children }) {
       fetchNotifications();
     } else {
       // Cleanup on logout
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+        reconnectTimeoutRef.current = null;
+      }
       if (wsRef.current) {
         wsRef.current.close();
         wsRef.current = null;
@@ -118,9 +124,6 @@ export function NotificationProvider({ children }) {
     };
   }, [user, fetchNotifications, connectWebSocket]);
 
-
-
-
   // Mark single notification as read
   const markAsRead = async (notificationId) => {
     try {
@@ -134,10 +137,6 @@ export function NotificationProvider({ children }) {
     }
   };
 
-
-
-
-
   // Mark all notifications as read
   const markAllAsRead = async () => {
     try {
@@ -148,9 +147,6 @@ export function NotificationProvider({ children }) {
       console.error('Failed to mark all as read:', error);
     }
   };
-
-
-
 
   return (
     <NotificationContext.Provider value={{

@@ -12,6 +12,18 @@ export function AuthProvider({ children }) {
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
+  // Listen for forced logout events from axios interceptor
+  useEffect(() => {
+    const handleForcedLogout = () => {
+      setUser(null);
+    };
+
+    window.addEventListener('auth:logout', handleForcedLogout);
+    return () => {
+      window.removeEventListener('auth:logout', handleForcedLogout);
+    };
+  }, []);
+
   async function login(username, password) {
     const { data } = await client.post('/users/login/', { username, password });
     localStorage.setItem('access', data.access);

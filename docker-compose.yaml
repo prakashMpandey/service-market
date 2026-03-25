@@ -1,0 +1,47 @@
+services:
+ 
+  server:
+    build: ./backend
+    container_name: server
+    command: ["daphne", "-b","0.0.0.0","-p","8000","backend.asgi:application"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: "service_started"
+
+    env_file:
+      - .env
+    restart: always
+
+  client:
+    build: 
+      context: ./frontend
+      args:
+         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+         VITE_WS_BASE_URL: ${VITE_WS_BASE_URL}
+    
+    container_name: client
+    ports:
+      - 3000:80
+    
+    depends_on:
+      - redis
+      - server
+      - worker
+    restart: always
+    
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  worker:
+    build: ./backend
+    command: celery -A backend worker --loglevel=info --concurrency=1
+    depends_on:
+      - redis
+      - server
+    env_file: .env
+
+    

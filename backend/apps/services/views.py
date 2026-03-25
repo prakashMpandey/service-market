@@ -18,7 +18,7 @@ from django.views.decorators.cache import cache_page
 class ServicesListView(ListAPIView):
     queryset=Service.objects.prefetch_related('category')[:6]
     serializer_class=ServiceSerializer
-    permission_classes=[IsAuthenticated]
+    # permission_classes=[IsAuthenticated]
 
     @method_decorator(cache_page(60*10,key_prefix='public_list'))
     def list(self, request, *args, **kwargs):
